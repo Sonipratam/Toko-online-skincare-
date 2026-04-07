@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Keranjang</title>
+<style>
+body {
+  font-family: Arial;
+  background: linear-gradient(to bottom, #4facfe, #00c6ff);
+  margin: 0;
+}
+
+.container {
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: red;
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Keranjang</h2>
+<div id="cart"></div>
+
+<a href="checkout.html">
+<button style="background:green;">Checkout</button>
+</a>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let container = document.getElementById("cart");
+
+function render(){
+  container.innerHTML = "";
+  cart.forEach((item, index)=>{
+    container.innerHTML += `
+      <div class="card">
+        <h3>${item.nama}</h3>
+        <p>Rp ${item.harga}</p>
+        <button onclick="hapus(${index})">Hapus</button>
+      </div>
+    `;
+  });
+}
+
+function hapus(index){
+  cart.splice(index,1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>
